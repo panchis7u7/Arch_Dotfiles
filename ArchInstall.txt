@@ -1,0 +1,11 @@
+sudo pacman -S git lsd bat
+
+# yay installation.
+# -------------------------------------------------
+
+cd /opt
+sudo git clone https://aur.archlinux.org/yay-git.git
+sudo chown -R panchis:panchis ./yay-git
+cd yay-git
+makepkg -si
+yay -S nerd-fonts-compl
