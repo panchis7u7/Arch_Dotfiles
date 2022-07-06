@@ -161,9 +161,11 @@ accents =  [["#D08770", "#D08770"],
 # Layout.
 #################################################
 
+layout_gap = 4
+
 layout_theme = {
     "border_width": 2,
-    "margin": 4,
+    "margin": layout_gap,
     "border_focus": blue,
     "border_normal": "#1D2330",
 }
@@ -236,43 +238,43 @@ screens = [
             ),
             dark_sep,
             dark_sep,
-            
+
             *nice_widget(widget.TextBox("ﱮ Open File Explorer", foreground="#FFFFFF", background=purple[0],
                                         mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(file_explorer)}), purple[0]),
-            
+
             dark_sep,
             dark_sep,
-            
+
             widget.TextBox("default config", name="default"),
-            
+
             dark_sep,
             dark_sep,
-            
+
             *nice_widget(widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#FFFFFF", background="#d75f5f"),"#d75f5f"),
-            
+
             dark_sep,
             dark_sep,
-            
+
             widget.TextBox("Systray: ", foreground="#d75f5f"),
             widget.Systray(),
-            
+
             dark_sep,
             dark_sep,
-            
+
             # Wifi
             # widget.Net(foreground = red, interface = 'wlan0', format = '   NET {down} '),
             # widget.Net(foreground = green, interface = 'wlan0', format = '  NET {up} '),
-            
+
             # Volume (nf-mdi-volume_plus)
             widget.TextBox(text = "墳", padding = 0, foreground = orange,
                 mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(terminal + ' -e alsamixer')},
             ),
             dark_sep,
             widget.Volume(foreground = orange),
-            
+
             dark_sep,
             dark_sep,
-            
+
             # Microphone
             widget.TextBox(text = "", padding = 0, foreground= blue,
                 mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(terminal + ' -e alsamixer')},
@@ -281,12 +283,12 @@ screens = [
             widget.Volume(foreground = blue, channel = 'Capture'),
             dark_sep,
             dark_sep,
-            
+
             # Clock
             widget.Clock(foreground = purple, format = "   %a %b %d    %H:%M "),
             dark_sep,
             dark_sep,
-            
+
             # CPU
             widget.CPU(foreground = yellow, format = '  CPU {freq_current}GHz {load_percent}%'
                 ,mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(terminal + ' -e bashtop')}
@@ -294,26 +296,26 @@ screens = [
             dark_sep,
             dark_sep,
             dark_sep,
-            
+
             widget.TextBox(text = "", padding = 0, foreground= green,
                 mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(terminal + ' -e bashtop')},
             ),
             # Memory
             widget.Memory(foreground=green),
-            
+
             dark_sep,
             dark_sep,
-            
+
             # GPU
-            widget.NvidiaSensors(foreground = yellow, format = '   GPU {temp}°C', 
+            widget.NvidiaSensors(foreground = yellow, format = '   GPU {temp}°C',
                 mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(terminal + ' -e nvtop')}
             ),
-            widget.Memory(foreground = yellow, measure_mem= 'G', format='  GPU MEM{MemUsed: .0f}{mm} ', 
+            widget.Memory(foreground = yellow, measure_mem= 'G', format='  GPU MEM{MemUsed: .0f}{mm} ',
                 mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(terminal + ' -e bashtop')}
             ),
             dark_sep,
             dark_sep,
-            
+
             # Checkpoints.
             widget.CheckUpdates(
                 update_interval = 1800,
@@ -327,18 +329,21 @@ screens = [
             ),
             dark_sep,
             dark_sep,
-            
+
             widget.QuickExit(),
-            
+
             dark_sep,
             dark_sep,
-            
+
             widget.CurrentLayout(),
-            
+
             dark_sep,
             dark_sep,
-                
-        ], 30, background=bar_color),
+
+        ], 30, background=bar_color, margin=[0,0,layout_gap,0]),
+        bottom=bar.Gap(layout_gap),
+        left=bar.Gap(layout_gap),
+        right=bar.Gap(layout_gap)
     ),
 ]
 
