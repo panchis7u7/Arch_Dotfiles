@@ -28,14 +28,14 @@ from libqtile import bar, layout, widget
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile import qtile
-from pygments import highlight
-#from libqtile.utils import guess_terminal
 
-# widget.cpu = psutil
+# Free icons can be downloaded from nerd fonts cheat sheet (These requiere nerd fonts to work)
+# Hardware monitoring requieres => python-psutil
 
 mod = "mod4"
 #terminal = guess_terminal()
 terminal = "alacritty"
+file_explorer = "thunar"
 
 keys = [
     # A list of available commands that can be bound to keys can be found
@@ -200,6 +200,17 @@ dark_sep    = widget.Sep(linewidth = 0, padding = 6, background = bar_color, for
 light_sep   = widget.Sep(linewidth = 0, padding = 6, background = background_light, foreground = background_light)
 
 #################################################
+# Graphics.
+#################################################
+
+def nice_widget(widget_param, fill_color):
+    return ([
+        widget.TextBox(text='', foreground=fill_color, fontsize=30, padding=-0.1),
+        widget_param,
+        widget.TextBox(text='', foreground=fill_color, fontsize=30, padding=0)
+    ])
+
+#################################################
 # Widgets.
 #################################################
 
@@ -225,14 +236,28 @@ screens = [
             ),
             dark_sep,
             dark_sep,
+            
+            *nice_widget(widget.TextBox("ﱮ Open File Explorer", foreground="#FFFFFF", background=purple[0],
+                                        mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(file_explorer)}), purple[0]),
+            
+            dark_sep,
+            dark_sep,
+            
             widget.TextBox("default config", name="default"),
+            
             dark_sep,
             dark_sep,
-            widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
+            
+            *nice_widget(widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#FFFFFF", background="#d75f5f"),"#d75f5f"),
+            
             dark_sep,
             dark_sep,
+            
             widget.TextBox("Systray: ", foreground="#d75f5f"),
             widget.Systray(),
+            
+            dark_sep,
+            dark_sep,
             
             # Wifi
             # widget.Net(foreground = red, interface = 'wlan0', format = '   NET {down} '),
@@ -242,16 +267,18 @@ screens = [
             widget.TextBox(text = "墳", padding = 0, foreground = orange,
                 mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(terminal + ' -e alsamixer')},
             ),
+            dark_sep,
             widget.Volume(foreground = orange),
+            
             dark_sep,
             dark_sep,
             
             # Microphone
-            widget.TextBox(text = "", padding = 0, foreground= orange,
+            widget.TextBox(text = "", padding = 0, foreground= blue,
                 mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(terminal + ' -e alsamixer')},
             ),
             dark_sep,
-            widget.Volume(foreground = red, channel = 'Capture'),
+            widget.Volume(foreground = blue, channel = 'Capture'),
             dark_sep,
             dark_sep,
             
@@ -264,6 +291,16 @@ screens = [
             widget.CPU(foreground = yellow, format = '  CPU {freq_current}GHz {load_percent}%'
                 ,mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(terminal + ' -e bashtop')}
             ),
+            dark_sep,
+            dark_sep,
+            dark_sep,
+            
+            widget.TextBox(text = "", padding = 0, foreground= green,
+                mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(terminal + ' -e bashtop')},
+            ),
+            # Memory
+            widget.Memory(foreground=green),
+            
             dark_sep,
             dark_sep,
             
@@ -295,7 +332,11 @@ screens = [
             
             dark_sep,
             dark_sep,
+            
             widget.CurrentLayout(),
+            
+            dark_sep,
+            dark_sep,
                 
         ], 30, background=bar_color),
     ),
