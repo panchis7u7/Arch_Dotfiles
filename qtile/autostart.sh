@@ -1,6 +1,13 @@
+#!/bin/sh
+
+# Background image restore.
+#------------------------------------
+nitrogen --restore &
+picom &
+
 # Keyboard en_US layout.
 #------------------------------------
-setxkbmap en &
+setxkbmap es &
 
 # Resolution configuration.
 #------------------------------------
@@ -19,7 +26,3 @@ nm-applet &
 volumeicon &
 
 cbatticon -u 5 &
-
-# Background image restore.
-#------------------------------------
-nitrogen --restore &
