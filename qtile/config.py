@@ -295,11 +295,22 @@ screens = [
             widget.Clock(foreground = purple, format = "   %a %b %d    %H:%M "),
             dark_sep,
             dark_sep,
+            
+            # Network
+            widget.TextBox(text="龍 ", padding=0, foreground=red,
+                mouse_callbacks={'Button1': lambda: qtile.cmd_spawn(terminal + ' -e speedtest-cli')},
+            ),
+            widget.Net(foreground=red, format='{down} {up}', interface="enp0s25", use_bits=True),
+            
+            dark_sep,
+            dark_sep,
+            dark_sep,
 
             # CPU
             widget.CPU(foreground = yellow, format = '  CPU {freq_current}GHz {load_percent}%'
                 ,mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(terminal + ' -e bashtop')}
             ),
+            
             dark_sep,
             dark_sep,
             dark_sep,
