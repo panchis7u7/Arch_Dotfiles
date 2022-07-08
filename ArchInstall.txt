@@ -9,3 +9,7 @@ sudo chown -R panchis:panchis ./yay-git
 cd yay-git
 makepkg -si
 yay -S nerd-fonts-compl
+
+# Evolution installation.
+# -------------------------------------------------
+sudo pacman -S evolution gnome-keyring
