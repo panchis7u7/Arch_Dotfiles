@@ -1,3 +1,14 @@
+#  $$$$$$\    $$\     $$\ $$\
+# $$  __$$\   $$ |    \__|$$ |
+# $$ /  $$ |$$$$$$\   $$\ $$ | $$$$$$\
+# $$ |  $$ |\_$$  _|  $$ |$$ |$$  __$$\
+# $$ |  $$ |  $$ |    $$ |$$ |$$$$$$$$ |
+# $$ $$\$$ |  $$ |$$\ $$ |$$ |$$   ____|
+# \$$$$$$ /   \$$$$  |$$ |$$ |\$$$$$$$\
+#  \___$$$\    \____/ \__|\__| \_______|
+#      \___|
+#
+
 # Copyright (c) 2010 Aldo Cortesi
 # Copyright (c) 2010, 2014 dequis
 # Copyright (c) 2012 Randall Ma
@@ -231,8 +242,8 @@ screens = [
                 inactive=inactive_color,
                 border_width=1,
                 disable_drag=True,
-                fontsize=26,
-                highlight_method='line'
+                fontsize=34,
+                highlight_method='block'
             ),
             widget.Prompt(),
             widget.TextBox(text='\ue0b0', background=background_light, foreground=background_dark, padding=0, fontsize=24),
@@ -358,7 +369,7 @@ screens = [
             dark_sep,
             dark_sep,
 
-        ], 30, background=bar_color, margin=[0,0,layout_gap,0]),
+        ], 30, background=bar_color, margin=[layout_gap*2,layout_gap*2,layout_gap,layout_gap*2]),
         bottom=bar.Gap(layout_gap),
         left=bar.Gap(layout_gap),
         right=bar.Gap(layout_gap)
