@@ -1,6 +1,7 @@
-sudo pacman -S git lsd bat
+sudo pacman -Syu
+sudo pacman -S git lsd bat dkms
 
-# yay installation.
+# yay installation. AUR packages manager.
 # -------------------------------------------------
 
 cd /opt
@@ -13,3 +14,8 @@ yay -S nerd-fonts-compl
 # Evolution installation.
 # -------------------------------------------------
 sudo pacman -S evolution gnome-keyring
+
+# Audio drivers.
+# -------------------------------------------------
+sudo pacman -S alsa-utils
+amixer sset Master unmute
