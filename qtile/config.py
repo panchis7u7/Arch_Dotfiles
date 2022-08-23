@@ -234,15 +234,14 @@ def nice_widget(widget_param, fill_color):
 # Widgets.
 #################################################
 
-screens = [
-    Screen(
-        top=bar.Bar([
+def screen_gen_config(fontsize): 
+    return bar.Bar([
             widget.GroupBox(
                 active=active_color,
                 inactive=inactive_color,
                 border_width=1,
                 disable_drag=True,
-                fontsize=34,
+                fontsize=fontsize,
                 highlight_method='block'
             ),
             widget.Prompt(),
@@ -369,11 +368,27 @@ screens = [
             dark_sep,
             dark_sep,
 
-        ], 30, background=bar_color, margin=[layout_gap*2,layout_gap*2,layout_gap,layout_gap*2]),
+        ], 30, background=bar_color, margin=[layout_gap*2,layout_gap*2,layout_gap,layout_gap*2])
+
+screens = [
+    Screen(
+        top=screen_gen_config(34),
         bottom=bar.Gap(layout_gap),
         left=bar.Gap(layout_gap),
         right=bar.Gap(layout_gap)
     ),
+    Screen(
+        top=screen_gen_config(34),
+        bottom=bar.Gap(layout_gap),
+        left=bar.Gap(layout_gap),
+        right=bar.Gap(layout_gap)
+    ),
+    Screen(
+        top=screen_gen_config(34),
+        bottom=bar.Gap(layout_gap),
+        left=bar.Gap(layout_gap),
+        right=bar.Gap(layout_gap)
+    )
 ]
 
 # Drag floating layouts.

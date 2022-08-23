@@ -7,7 +7,7 @@ picom &
 
 # Keyboard en_US layout.
 #------------------------------------
-setxkbmap es &
+setxkbmap us &
 
 # Resolution configuration.
 #------------------------------------
