@@ -1,9 +1,13 @@
 sudo pacman -Syu
 sudo pacman -S git lsd bat dkms
 
+# Set timezone.
+# -------------------------------------------------
+sudo timedatectl set-timezone America/Mexico_City
+sudo timedatectl set-ntp true
+
 # yay installation. AUR packages manager.
 # -------------------------------------------------
-
 cd /opt
 sudo git clone https://aur.archlinux.org/yay-git.git
 sudo chown -R panchis:panchis ./yay-git
