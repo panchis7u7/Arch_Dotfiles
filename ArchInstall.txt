@@ -1,10 +1,123 @@
-sudo pacman -Syu
-sudo pacman -S git lsd bat dkms
-
-# Set timezone.
+# Set Wireless Wi-fi card.
 # -------------------------------------------------
-sudo timedatectl set-timezone America/Mexico_City
-sudo timedatectl set-ntp true
+ip link set wlan0 up
+iwlist wlan0 scan
+# iwconfig wlan0 essid <SSID> key s:<key> (non-wpa)
+wpa_passphrase <SSID> <Key> > /etc/<config-filename>
+wpa_supplicant -B -i wlan0 -D wext -c /etc/<config-filename>
+
+# UEFI Partitions.
+# -------------------------------------------------
+# ls /sys/firmware/efi/efivars # If not empty, UEFI is possible.
+# Use cfdisk for disk partitions.
+mkfs.vfat -F32 /dev/<Block> # EFI.
+mkfs.ext4 /dev/<Block>      # / and # Partitions.
+mkswap /dev/<Block>
+swapon
+
+mount /dev/</-Block> /mnt
+mkdir -p /mnt/boot/efi
+mount /dev/<efi-block> /mnt/boot/efi
+mkdir /mnt/home
+mount /dev/<#-Block> /mnt/home
+
+# Base packages installation.
+# -------------------------------------------------
+pacstrap /mnt linux linux-firmware base nano grub networkmanager dhcpcd efibootmgr
+pacstrap /mnt netctl wpa_supplicant dialog
+
+# Generate fstab.
+# -------------------------------------------------
+genfstab /mnt >> /mnt/etc/fstab
+
+# timezone, clock and keyboard layout.
+# -------------------------------------------------
+arch-chroot /mnt
+echo <hostname> > /etc/hostname
+# timedatectl list-timezones        # List all available timezones.
+ln -sf /user/share/zoneinfo/America/Mexico_City /etc/localtime
+nano /etc/locale.gen
+locale-gen
+echo KEYMAP=en > /etc/vconsole.conf
+echo LANG=en_US.UTF8 > /etc/locale.conf
+
+# GRUB installation with UEFI.
+# -------------------------------------------------
+grub-install --efi-directory=/boot/efi --bootloader -id='Arch Linux' --target=x86_64-efi
+grub-mkconfig -o /boot/grub/grub.cfg
+
+# User config.
+# -------------------------------------------------
+passwd
+useradd -m <user_name>
+passwd <user_name>
+
+# Reboot.
+# -------------------------------------------------
+exit
+umount -R /mnt
+
+# Add windows to boot menu.
+# -------------------------------------------------
+# Uncomment OS-PROBER-DETECTION=FALSE
+pacman -S ntfs-3g os-prober
+os-prober
+grub-mkconfig -o /boot/grub/grub.cfg
+
+# Enable and configure wireless connectivity.
+# -------------------------------------------------
+systemctl enable NetworkManager
+systemctl start NetworkManager
+nmcli dev wifi connect <SSID> password <Key>
+
+# Xorg y mesa.
+# -------------------------------------------------
+pacman -S xorg-server xorg-xinit mesa mesa-demos net-tools wget
+sudo apt-get install dkms linux-headers sudo
+echo "blacklist nouveau" > /etc/modprobe.d/nouveau.conf
+# Install oficial nvidia drivers.
+reboot
+
+# Install Qtile.
+# -------------------------------------------------
+usermod -aG <group> <user>
+nano /etc/sudoers
+# Uncomment  %wheel   ALL=(ALL)   ALL
+sudo pacman -S lightdm lightdm-gtk-greeter
+sudo vim /etc/lightdm/lightdm.conf
+# Uncomment greeter-session=example-gtk-gnome
+# change to lightdm-gtk-greeter
+sudo systemctl enable lightdm
+sudo pacman -S qtile xterm code firefox rofi which nitrogen vim accountsservice
+sudo pacman -S ttf-dejavu ttf-liberation noto-fonts
+sudo pacman -S pulseaudio pavucontrol pamixer
+sudo pacman -S arandr udiskie network-manager-applet
+sudo pacman -S volumeicon cbatticon xorg-xinit base-devel git thunar ranger glib2 gvfs lxappearance picom geeqie vlc
+reboot
+
+# Utilities.
+# -------------------------------------------------
+sudo pacman -S lsd bat htop bashtop zsh unzip flameshot
+# Aliases:
+# alias ls="lsd"
+# alias cat="bat"
+
+# Config Qtile.
+# -------------------------------------------------
+sudo pacman -S alacritty screenkey neofetch python-pip python-psutil
+# Qtile config: /home/<user>/.config/qtile/
+# Picom config: /home/<user>/.config/picom/
+# Alacritty config: /home/<user>/.config/alacritty/
+# To use a custom picom file use:
+picom --config ~/.config/picom/picom.conf
+
+# Dracula theme.
+# -------------------------------------------------
+https://draculatheme.com/gtk (And icons)
+mv gtk-master ~/.themes/dracula
+mv Dracula ~/.icons/dracula
+# Then open appareance app.
+rofi-theme-selector
 
 # yay installation. AUR packages manager.
 # -------------------------------------------------
@@ -14,6 +127,18 @@ sudo chown -R panchis:panchis ./yay-git
 cd yay-git
 makepkg -si
 yay -S nerd-fonts-compl
+JetBrainMono ttf => /usr/share/fonts
+
+# Install snap.
+# -------------------------------------------------
+https://snapcraft.io/install/code/arch
+sudo snap install code --classic
+sudo snap install discord
+
+# Set timezone.
+# -------------------------------------------------
+sudo timedatectl set-timezone America/Mexico_City
+sudo timedatectl set-ntp true
 
 # Evolution installation.
 # -------------------------------------------------
