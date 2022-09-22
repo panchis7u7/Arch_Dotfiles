@@ -163,3 +163,11 @@ sudo systemctl enable bluetooth
 sudo systemctl start bluetooth
 
 yay -S libxcrypt-compat
+
+# Mount ntfs drives.
+# -------------------------------------------------
+sudo pacman -S ntfs-3g fuse
+mkdir -p /media/<curent_user>/<media_name>
+sudo mount -t ntfs-3g /dev/sda2 /media/<curent_user>/<media_name>
+# To mount automatically the drive, add this line to /etc/fstab>
+# /dev/<drive>        /media/<curent_user>/<media_name>       ntfs    defaults        0       0
