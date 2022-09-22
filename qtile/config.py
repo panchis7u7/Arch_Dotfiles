@@ -278,8 +278,8 @@ def screen_gen_config(fontsize):
 
             *nice_widget(widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#FFFFFF", background="#d75f5f"),"#d75f5f"),
 
-            dark_sep,
-            dark_sep,
+            # dark_sep,
+            # dark_sep,
 
             widget.TextBox("Systray: ", foreground="#d75f5f"),
             widget.Systray(),

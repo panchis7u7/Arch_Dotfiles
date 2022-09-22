@@ -97,7 +97,7 @@ reboot
 
 # Utilities.
 # -------------------------------------------------
-sudo pacman -S lsd bat htop bashtop zsh unzip flameshot
+sudo pacman -S lsd bat htop bashtop zsh unzip flameshot lftp
 # Aliases:
 # alias ls="lsd"
 # alias cat="bat"
@@ -135,6 +135,13 @@ https://snapcraft.io/install/code/arch
 sudo snap install code --classic
 sudo snap install discord
 
+# SDDM.
+# -------------------------------------------------
+sudo pacman -S sddm
+sudo systemctl enable sddm
+sudo yay -S sddm-theme-sugar-candy-git
+# /usr/share/sddm/themes/Sugar-Candy/theme.conf
+
 # Set timezone.
 # -------------------------------------------------
 sudo timedatectl set-timezone America/Mexico_City
@@ -154,3 +161,5 @@ amixer sset Master unmute
 sudo pacman -S bluez bluez-utils
 sudo systemctl enable bluetooth
 sudo systemctl start bluetooth
+
+yay -S libxcrypt-compat
