@@ -136,6 +136,7 @@ JetBrainMono ttf => /usr/share/fonts
 
 # Install snap.
 # -------------------------------------------------
+yay -S snapd
 https://snapcraft.io/install/code/arch
 sudo snap install code --classic
 sudo snap install discord
@@ -144,7 +145,8 @@ sudo snap install discord
 # -------------------------------------------------
 sudo pacman -S sddm
 sudo systemctl enable sddm
-sudo yay -S sddm-theme-sugar-candy-git
+# nano /usr/lib/sddm/sddm.conf.d/default.conf
+yay -S sddm-theme-sugar-candy-git
 # /usr/share/sddm/themes/Sugar-Candy/theme.conf
 
 # Set timezone.
