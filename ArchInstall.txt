@@ -70,6 +70,11 @@ systemctl enable NetworkManager
 systemctl start NetworkManager
 nmcli dev wifi connect <SSID> password <Key>
 
+# Generic Drivers for NVIDIA.
+# -------------------------------------------------
+pacman -S xf86-video-vesa
+pacman -S xf86-video-nouveau
+
 # Xorg y mesa.
 # -------------------------------------------------
 pacman -S xorg-server xorg-xinit mesa mesa-demos net-tools wget
