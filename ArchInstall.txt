@@ -75,6 +75,12 @@ nmcli dev wifi connect <SSID> password <Key>
 pacman -S xf86-video-vesa
 pacman -S xf86-video-nouveau
 
+# If proprietary drivers are preferred to be installed, blacklist nouveau:
+# Create file /usr/lib/modprobe.d/nvidia-installer-disable-nouveau.conf and paste the following
+# as the file's content:
+blacklist nouveau
+options nouveau modeset=0
+
 # Xorg y mesa.
 # -------------------------------------------------
 pacman -S xorg-server xorg-xinit mesa mesa-demos net-tools wget
