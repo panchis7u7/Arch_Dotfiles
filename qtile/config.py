@@ -54,6 +54,7 @@ mod = "mod4"
 #terminal = guess_terminal()
 terminal = "alacritty"
 file_explorer = "thunar"
+process_spawner = "rofi -show drun"
 
 keys = [
     # A list of available commands that can be bound to keys can be found
@@ -121,7 +122,7 @@ keys = [
 #5: nf-fa-qcode
 #6: nf-linux-docker
 
-groups = [Group(i) for i in ["", "ﱮ", "", "", "", ""]]
+groups = [Group(i) for i in [" ", "ﱮ", "", "", "", " "]]
 
 for i, group in enumerate(groups):
     numGroup = str(i+1)
@@ -217,7 +218,7 @@ layouts = [
 widget_defaults = dict(
     font="sans",
     fontsize=14,
-    padding=1,
+    margin=0
 )
 extension_defaults = widget_defaults.copy()
 
@@ -246,13 +247,19 @@ def nice_widget(widget_param, fill_color):
 def screen_gen_config(fontsize): 
     return bar.Bar([
             widget.GroupBox(
-                active=active_color,
+                active=yellow[0],
                 inactive=inactive_color,
-                border_width=1,
-                disable_drag=True,
+                border_width=0,
+                disable_drag=False,
                 fontsize=fontsize,
-                highlight_method='block'
+                highlight_method='text',
+                highlight_color=inactive_color,
+                margin_y=3,
+                spacing=2,
             ),
+            
+            dark_sep,
+            
             widget.Prompt(),
             widget.TextBox(text='\ue0b0', background=background_light, foreground=background_dark, padding=0, fontsize=24),
             widget.WindowName(background=background_light, foreground=text_color),
@@ -267,22 +274,17 @@ def screen_gen_config(fontsize):
 
             *nice_widget(widget.TextBox("ﱮ Open File Explorer", foreground="#FFFFFF", background=purple[0],
                                         mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(file_explorer)}), purple[0]),
-
-            dark_sep,
-            dark_sep,
-
-            widget.TextBox("default config", name="default"),
-
-            dark_sep,
-            dark_sep,
-
-            *nice_widget(widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#FFFFFF", background="#d75f5f"),"#d75f5f"),
-
+            
             # dark_sep,
             # dark_sep,
 
-            widget.TextBox("Systray: ", foreground="#d75f5f"),
-            widget.Systray(),
+            # widget.TextBox("default config", name="default"),
+
+            dark_sep,
+            dark_sep,
+
+            *nice_widget(widget.TextBox("Spawn", foreground="#FFFFFF", background="#d75f5f",
+                                        mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(process_spawner)}),"#d75f5f"),
 
             dark_sep,
             dark_sep,
@@ -292,7 +294,7 @@ def screen_gen_config(fontsize):
             # widget.Net(foreground = green, interface = 'wlan0', format = '  NET {up} '),
 
             # Volume (nf-mdi-volume_plus)
-            widget.TextBox(text = "墳", padding = 0, foreground = orange,
+            widget.TextBox(text = "墳", padding = 2, foreground = orange,
                 mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(terminal + ' -e alsamixer')},
             ),
             dark_sep,
@@ -319,7 +321,7 @@ def screen_gen_config(fontsize):
             widget.TextBox(text="龍 ", padding=0, foreground=red,
                 mouse_callbacks={'Button1': lambda: qtile.cmd_spawn(terminal + ' -e speedtest-cli')},
             ),
-            widget.Net(foreground=red, format='{down} {up}', interface="enp0s25", use_bits=True),
+            widget.Net(foreground=red, format='{down} {up}', interface="wlp2s0", use_bits=True),
             
             dark_sep,
             dark_sep,
@@ -329,6 +331,13 @@ def screen_gen_config(fontsize):
             widget.CPU(foreground = yellow, format = '  CPU {freq_current}GHz {load_percent}%'
                 ,mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(terminal + ' -e bashtop')}
             ),
+            
+            dark_sep,
+            dark_sep,
+
+            #widget.TextBox("Systray: ", foreground="#d75f5f"),
+            #widget.Systray(),
+            widget.HDDBusyGraph(),
             
             dark_sep,
             dark_sep,
@@ -372,10 +381,10 @@ def screen_gen_config(fontsize):
             dark_sep,
             dark_sep,
 
-            widget.CurrentLayout(),
+            # widget.CurrentLayout(),
 
-            dark_sep,
-            dark_sep,
+            # dark_sep,
+            # dark_sep,
 
         ], 30, background=bar_color, margin=[layout_gap*2,layout_gap*2,layout_gap,layout_gap*2])
 
