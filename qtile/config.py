@@ -350,7 +350,6 @@ def screen_gen_config(fontsize):
             widget.Memory(foreground=green),
 
             dark_sep,
-            dark_sep,
 
             # GPU
             widget.NvidiaSensors(foreground = yellow, format = '   GPU {temp}°C',
@@ -379,11 +378,10 @@ def screen_gen_config(fontsize):
             widget.QuickExit(),
 
             dark_sep,
+
+            widget.CurrentLayout(),
+
             dark_sep,
-
-            # widget.CurrentLayout(),
-
-            # dark_sep,
             # dark_sep,
 
         ], 30, background=bar_color, margin=[layout_gap*2,layout_gap*2,layout_gap,layout_gap*2])
