@@ -35,7 +35,7 @@ genfstab /mnt >> /mnt/etc/fstab
 arch-chroot /mnt
 echo <hostname> > /etc/hostname
 # timedatectl list-timezones        # List all available timezones.
-ln -sf /user/share/zoneinfo/America/Mexico_City /etc/localtime
+ln -sf /usr/share/zoneinfo/America/Mexico_City /etc/localtime
 nano /etc/locale.gen
 locale-gen
 echo KEYMAP=en > /etc/vconsole.conf
@@ -105,6 +105,17 @@ sudo pacman -S pulseaudio pavucontrol pamixer
 sudo pacman -S arandr udiskie network-manager-applet
 sudo pacman -S volumeicon cbatticon xorg-xinit base-devel git thunar ranger glib2 gvfs lxappearance picom geeqie vlc
 reboot
+
+# Installation of Nvidia proprietary driver.
+# -------------------------------------------------
+# Download Nvidia driver.
+# Once nouveau is blacklisted:
+sudo systemctl disable lightdm
+# Regenerate initramfs.
+mkinitcpio -p linux
+reboot
+# Install driver.
+sudo systemctl enable lightdm
 
 # Utilities.
 # -------------------------------------------------
