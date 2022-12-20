@@ -61,7 +61,7 @@ umount -R /mnt
 
 # Add windows to boot menu.
 # -------------------------------------------------
-# Uncomment OS-PROBER-DETECTION=FALSE
+# Uncomment OS-PROBER-DETECTION=FALSE in /etc/default/grub
 pacman -S ntfs-3g os-prober
 os-prober
 grub-mkconfig -o /boot/grub/grub.cfg
