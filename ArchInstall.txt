@@ -26,6 +26,8 @@ mount /dev/<#-Block> /mnt/home
 pacstrap /mnt linux linux-firmware base nano grub networkmanager dhcpcd efibootmgr
 pacstrap /mnt netctl wpa_supplicant dialog
 
+# If signature errors are present, check https://wiki.archlinux.org/title/Pacman/Package_signing#Invalid_signature_errors
+
 # Generate fstab.
 # -------------------------------------------------
 genfstab /mnt >> /mnt/etc/fstab
