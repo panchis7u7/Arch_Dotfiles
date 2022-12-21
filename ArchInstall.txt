@@ -59,6 +59,12 @@ passwd <user_name>
 exit
 umount -R /mnt
 
+sudo apt-get install dkms linux-headers sudo
+usermod -aG <group> <user>
+nano /etc/sudoers
+# Uncomment:  
+%wheel   ALL=(ALL)   ALL
+
 # Add windows to boot menu.
 # -------------------------------------------------
 # Uncomment OS-PROBER-DETECTION=FALSE in /etc/default/grub
@@ -74,28 +80,29 @@ nmcli dev wifi connect <SSID> password <Key>
 
 # Generic Drivers for NVIDIA.
 # -------------------------------------------------
-pacman -S xf86-video-vesa
-pacman -S xf86-video-nouveau
+# pacman -S xf86-video-vesa
+# pacman -S xf86-video-nouveau
 
+# Proprietary Drivers for NVIDIA.
+# -------------------------------------------------
 # If proprietary drivers are preferred to be installed, blacklist nouveau:
 # Create file /usr/lib/modprobe.d/nvidia-installer-disable-nouveau.conf and paste the following
 # as the file's content:
 blacklist nouveau
 options nouveau modeset=0
+# Regenerate initramfs:
+sudo mkinitcpio -p linux
+# You should see loaded the blacklist file with the following:
+sudo lsinitcpio /boot/initramfs-linux.img | grep nouveau
 
 # Xorg y mesa.
 # -------------------------------------------------
 pacman -S xorg-server xorg-xinit mesa mesa-demos net-tools wget
-sudo apt-get install dkms linux-headers sudo
-echo "blacklist nouveau" > /etc/modprobe.d/nouveau.conf
 # Install oficial nvidia drivers.
 reboot
 
 # Install Qtile.
 # -------------------------------------------------
-usermod -aG <group> <user>
-nano /etc/sudoers
-# Uncomment  %wheel   ALL=(ALL)   ALL
 sudo pacman -S lightdm lightdm-gtk-greeter
 sudo vim /etc/lightdm/lightdm.conf
 # Uncomment greeter-session=example-gtk-gnome
@@ -107,17 +114,6 @@ sudo pacman -S pulseaudio pavucontrol pamixer
 sudo pacman -S arandr udiskie network-manager-applet
 sudo pacman -S volumeicon cbatticon xorg-xinit base-devel git thunar ranger glib2 gvfs lxappearance picom geeqie vlc
 reboot
-
-# Installation of Nvidia proprietary driver.
-# -------------------------------------------------
-# Download Nvidia driver.
-# Once nouveau is blacklisted:
-sudo systemctl disable lightdm
-# Regenerate initramfs.
-mkinitcpio -p linux
-reboot
-# Install driver.
-sudo systemctl enable lightdm
 
 # Utilities.
 # -------------------------------------------------
