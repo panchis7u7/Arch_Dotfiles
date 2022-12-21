@@ -59,7 +59,7 @@ passwd <user_name>
 exit
 umount -R /mnt
 
-sudo apt-get install dkms linux-headers sudo
+sudo pacman -S dkms linux-headers sudo
 usermod -aG <group> <user>
 nano /etc/sudoers
 # Uncomment:  
@@ -151,6 +151,7 @@ JetBrainMono ttf => /usr/share/fonts
 
 # Install snap.
 # -------------------------------------------------
+# udo ln -s /var/lib/snapd/snap /snap
 yay -S snapd
 https://snapcraft.io/install/code/arch
 sudo snap install code --classic
@@ -159,8 +160,8 @@ sudo snap install discord
 # SDDM.
 # -------------------------------------------------
 sudo pacman -S sddm
-sudo systemctl enable sddm
-# nano /usr/lib/sddm/sddm.conf.d/default.conf
+sudo systemctl enable -f sddm
+# nano /usr/lib/sddm/sddm.conf.d/default.conf => theme=Sugar-Candy
 yay -S sddm-theme-sugar-candy-git
 # /usr/share/sddm/themes/Sugar-Candy/theme.conf
 
