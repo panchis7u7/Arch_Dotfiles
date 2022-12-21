@@ -130,6 +130,8 @@ sudo pacman -S alacritty screenkey neofetch python-pip python-psutil
 # Alacritty config: /home/<user>/.config/alacritty/
 # To use a custom picom file use:
 picom --config ~/.config/picom/picom.conf
+# If xprops and xwininfo are not available:
+sudo pacman -S xorg-xwininfo xorg-xprop
 
 # Dracula theme.
 # -------------------------------------------------
